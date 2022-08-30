@@ -10,16 +10,17 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      BlogPosts.hasOne(models.Users,
-        { foreignKey: 'id', as: 'userId'}
+      BlogPosts.belongsTo(models.Users,
+        { ass: 'user', foreignKey: 'userId' }
       );
     }
   };
   BlogPosts.init({
-    title: DataTypes.STRING
+    title: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'BlogPosts',
+    timestamps: false,
   });
   return BlogPosts;
 };
