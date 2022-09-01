@@ -16,11 +16,12 @@ module.exports = {
       },
       userId: {
         type: Sequelize.INTEGER,
-        foreignKey: true,
         references: {
           model: 'Users',
           key: 'id',
         },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       published: {
         allowNull: false,
