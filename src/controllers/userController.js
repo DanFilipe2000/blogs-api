@@ -9,7 +9,7 @@ const login = async (req, res) => {
 
     try {
         const result = await userService.login(email, password);
-        return res.status(200).json(result);
+        return res.status(200).json({ token: result });
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
