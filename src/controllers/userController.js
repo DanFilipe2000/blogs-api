@@ -15,4 +15,15 @@ const login = async (req, res) => {
     }
 };
 
-module.exports = { login };
+const create = async (req, res) => {
+    const { displayName, email, password, image } = req.body;
+
+    try {
+        const result = await userService.create({ displayName, email, password, image });
+        return res.status(201).json({ token: result });
+    } catch (err) {
+        return res.status(409).json({ message: err.message });
+    }
+};
+
+module.exports = { login, create };

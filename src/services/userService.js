@@ -14,4 +14,20 @@ const login = async (email, password) => {
     return token;
 };
 
-module.exports = { login };
+const create = async ({ displayName, email, password, image }) => {
+    const checkEmailExists = await User.findOne({ where: { email } });
+
+    if (!checkEmailExists) {
+        const createUser = await User.create({ displayName, email, password, image });
+        const token = jwt.sign(
+            { id: createUser.id },
+            process.env.JWT_SECRET,
+            { algorithm: 'HS256', expiresIn: '1d' },
+        );
+        return token;
+    } 
+    
+    throw new Error('User already registered');
+};
+
+module.exports = { login, create };
