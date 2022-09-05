@@ -19,11 +19,14 @@ const validateLogin = (req, res, next) => {
 const validateUser = (req, res, next) => {
     const { displayName, email, password } = req.body;
 
-    try {
-        userSchema.validate(displayName, email, password);
+    const { error } = userSchema.validate({ displayName, email, password });
+
+    if (error) {
+        const { details } = error;
+        console.log(details);
+        res.status(400).json({ message: details[0].message });
+    } else {
         next();
-    } catch (error) {
-        return res.status(400).json({ message: error.message });
     }
 };
 
