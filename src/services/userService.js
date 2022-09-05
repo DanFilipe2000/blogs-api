@@ -1,16 +1,10 @@
-const jwt = require('jsonwebtoken');
-require('dotenv').config();
-
 const { User } = require('../database/models');
+const { createToken } = require('../helpers/token');
 
 const login = async (email, password) => {
     const data = await User.findOne({ where: { email } });
     if (!data || data.password !== password) throw new Error('Invalid fields');
-    const token = jwt.sign(
-        { id: data.id },
-        process.env.JWT_SECRET,
-        { algorithm: 'HS256', expiresIn: '1d' },
-    );
+    const token = createToken(data.id);
     return token;
 };
 
@@ -19,15 +13,16 @@ const create = async ({ displayName, email, password, image }) => {
 
     if (!checkEmailExists) {
         const createUser = await User.create({ displayName, email, password, image });
-        const token = jwt.sign(
-            { id: createUser.id },
-            process.env.JWT_SECRET,
-            { algorithm: 'HS256', expiresIn: '1d' },
-        );
+        const token = createToken(createUser.id);
         return token;
     } 
     
     throw new Error('User already registered');
 };
 
-module.exports = { login, create };
+const getAll = async () => {
+    const results = await User.findAll({ attributes: { exclude: 'password' } });
+    return results;
+};
+
+module.exports = { login, create, getAll };
