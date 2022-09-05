@@ -9,5 +9,6 @@ const router = Router();
 
 router.post('/', userMiddleware.validateUser, userController.create);
 router.get('/', auth.tokenValidation, userController.getAll);
+router.get('/:id', auth.tokenValidation, userController.findByPk);
 
 module.exports = { router };
