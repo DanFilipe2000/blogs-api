@@ -10,4 +10,12 @@ const getAll = async () => {
     return result;
 };
 
-module.exports = { create, getAll };
+const check = async (categoryIds) => {
+    const { count } = await Category.findAndCountAll({
+        where: { id: categoryIds },
+    });
+
+    return count;
+};
+
+module.exports = { create, getAll, check };

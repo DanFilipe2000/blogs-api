@@ -3,11 +3,13 @@ const BlogPost = (sequelize, DataTypes) => {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoincrement: true,
+      autoIncrement: true,
     },
     title: DataTypes.STRING,
     content: DataTypes.STRING,
     userId: {
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
       type: DataTypes.INTEGER,
       foreignKey: true,
       references: {

@@ -20,8 +20,6 @@ module.exports = {
           model: 'Users',
           key: 'id',
         },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
       },
       published: {
         allowNull: false,

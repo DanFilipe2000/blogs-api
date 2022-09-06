@@ -23,7 +23,6 @@ const validateUser = (req, res, next) => {
 
     if (error) {
         const { details } = error;
-        console.log(details);
         res.status(400).json({ message: details[0].message });
     } else {
         next();

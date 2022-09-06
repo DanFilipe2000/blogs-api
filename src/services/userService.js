@@ -3,8 +3,8 @@ const { createToken } = require('../helpers/token');
 
 const login = async (email, password) => {
     const data = await User.findOne({ where: { email } });
-    if (!data || data.password !== password) throw new Error('Invalid fields');
-    const token = createToken(data.id);
+    if (!data || data.dataValues.password !== password) throw new Error('Invalid fields');
+    const token = createToken(data.dataValues.id);
     return token;
 };
 
